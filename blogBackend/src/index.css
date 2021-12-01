@@ -12,3 +12,14 @@ span {
   font-weight: 400;
   color: #606266;
 }
+
+.point {
+  content: "";
+  background: #fff;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 2px;
+}
