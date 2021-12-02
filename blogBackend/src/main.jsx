@@ -2,8 +2,25 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./index.css";
-import { Layout, Menu, Button, Tag, Breadcrumb } from "antd";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import {
+  Layout,
+  Menu,
+  Button,
+  Tag,
+  Breadcrumb,
+  Dropdown,
+  Avatar,
+  Image,
+} from "antd";
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  GithubOutlined,
+  HomeOutlined,
+  RocketOutlined,
+  DownOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -15,6 +32,21 @@ function SiderMenus(props) {
         <Menu theme="dark" mode="inline"></Menu>
       </Sider>
     </>
+  );
+}
+function AvatarMenus(props) {
+  return (
+    <Menu>
+      <Menu.Item key="0">
+        <a>关于我</a>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="1">
+        <a>更新日志</a>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="3">退出</Menu.Item>
+    </Menu>
   );
 }
 function HeaderMenus(props) {
@@ -40,8 +72,23 @@ function HeaderMenus(props) {
             <Breadcrumb.Item>An Application</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-        <div>
-          <span style={{ paddingRight: 20 }}>Hello</span>
+        <div
+          style={{
+            marginRight: 20,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <GithubOutlined className="middium-icon" />
+          <HomeOutlined className="middium-icon" />
+          <RocketOutlined className="middium-icon" />
+          <Dropdown overlay={AvatarMenus} trigger={["click"]}>
+            <Avatar
+              size="large"
+              src="https://joeschmoe.io/api/v1/random"
+              style={{ marginLeft: 30, marginRight: 5 }}
+            />
+          </Dropdown>
         </div>
       </Header>
       <Header
