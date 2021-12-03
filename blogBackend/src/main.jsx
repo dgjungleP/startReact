@@ -22,6 +22,13 @@ function BasePage(props) {
     changeSelectedTag(tagItem);
     changeTags(newTags);
   };
+  const onCloseTag = (tag) => {
+    let newTags = tags.filter((item) => tag.id != item.id);
+    if (tag.id == selectedTag.id) {
+      changeSelectedTag({});
+    }
+    changeTags(newTags);
+  };
   return (
     <div>
       <Layout style={{ minHeight: "100vh" }}>
@@ -32,6 +39,7 @@ function BasePage(props) {
             onCollapse={onCollapse}
             tags={tags}
             changeSelectedTag={changeSelectedTag}
+            closeTag={onCloseTag}
             selectedTag={selectedTag}
           />
           <Content style={{ margin: "0 16px" }}>

@@ -85,6 +85,7 @@ function HeaderMenus(props) {
               closable
               color={props.selectedTag == tag ? "#87d068" : ""}
               onClick={() => props.changeSelectedTag(tag)}
+              onClose={() => props.closeTag(tag)}
             >
               <span
                 className="point"
