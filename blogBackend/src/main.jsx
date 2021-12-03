@@ -74,7 +74,11 @@ const menusItems = [
 const RouterMap = {};
 makeRouterMap();
 function makeRouterMap() {
-  menusItems.forEach((item) => (RouterMap[item.abselutePath] = item.title));
+  menusItems.forEach((item) => {
+    let parent = SubMenus.find((data) => data.id == item.parent);
+    RouterMap[item.abselutePath] =
+      (parent ? parent.title + "/" : "") + item.title;
+  });
 }
 
 function BasePage(props) {
