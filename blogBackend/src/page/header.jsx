@@ -38,7 +38,7 @@ function HeaderMenus(props) {
         }}
       >
         <div>
-          <Button type="primary" onClick={props.onCollapse}>
+          <Button type="" onClick={props.onCollapse}>
             {React.createElement(
               props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined
             )}
@@ -80,14 +80,17 @@ function HeaderMenus(props) {
         {props.tags.map((tag) => {
           return (
             <Tag
-              key={tag}
+              key={tag.id}
               style={{ height: 24 }}
               closable
               color={props.selectedTag == tag ? "#87d068" : ""}
               onClick={() => props.changeSelectedTag(tag)}
             >
-              <span className="point" hidden={props.selectedTag != tag}></span>{" "}
-              {tag}
+              <span
+                className="point"
+                hidden={props.selectedTag.id != tag.id}
+              ></span>{" "}
+              {tag.title}
             </Tag>
           );
         })}

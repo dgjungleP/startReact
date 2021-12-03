@@ -10,19 +10,27 @@ const { Content, Footer } = Layout;
 function BasePage(props) {
   const [collapsed, changeCollapsed] = useState(false);
   const [selectedTag, changeSelectedTag] = useState("");
-
+  const [tags, changeTags] = useState([]);
   const onCollapse = () => {
     changeCollapsed(!collapsed);
+  };
+  const onChangeTags = (tagItem) => {
+    let newTags = [...tags];
+    if (tags.every((item) => item.id != tagItem.id)) {
+      newTags.push(tagItem);
+    }
+    changeSelectedTag(tagItem);
+    changeTags(newTags);
   };
   return (
     <div>
       <Layout style={{ minHeight: "100vh" }}>
-        <SiderMenus collapsed={collapsed} />
+        <SiderMenus collapsed={collapsed} selectTag={onChangeTags} />
         <Layout className="site-layout">
           <HeaderMenus
             collapsed={collapsed}
             onCollapse={onCollapse}
-            tags={[111, 2222, 3333]}
+            tags={tags}
             changeSelectedTag={changeSelectedTag}
             selectedTag={selectedTag}
           />
