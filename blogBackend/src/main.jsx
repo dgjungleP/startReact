@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./index.css";
 import { HeaderMenus } from "./page/header";
@@ -42,20 +43,50 @@ function BasePage(props) {
             closeTag={onCloseTag}
             selectedTag={selectedTag}
           />
-          <Content style={{ margin: "0 16px" }}>
-            <div
-              className="site-layout-background"
-              style={{ padding: 24, minHeight: 360, marginTop: 20 }}
-            >
-              Bill is a cat.
-            </div>
-          </Content>
-          <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2018 Created by Ant UED
-          </Footer>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="about" element={<About />} />
+          </Routes>
+
+          <Footer style={{ textAlign: "center" }}>Create By Jungle</Footer>
         </Layout>
       </Layout>
     </div>
   );
 }
-ReactDOM.render(<BasePage />, document.getElementById("root"));
+
+function Home() {
+  return (
+    <>
+      <Content style={{ margin: "0 16px" }}>
+        <div
+          className="site-layout-background"
+          style={{ padding: 24, minHeight: 360, marginTop: 20 }}
+        >
+          Bill is a cat.
+        </div>
+      </Content>
+    </>
+  );
+}
+
+function About() {
+  return (
+    <>
+      <Content style={{ margin: "0 16px" }}>
+        <div
+          className="site-layout-background"
+          style={{ padding: 24, minHeight: 360, marginTop: 20 }}
+        >
+          Bill is a cat.
+        </div>
+      </Content>
+    </>
+  );
+}
+ReactDOM.render(
+  <BrowserRouter>
+    <BasePage />
+  </BrowserRouter>,
+  document.getElementById("root")
+);
