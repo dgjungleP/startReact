@@ -47,7 +47,6 @@ function BasePage(props) {
             <Route path="/" element={<Home />} />
             <Route path="about" element={<About />} />
           </Routes>
-
           <Footer style={{ textAlign: "center" }}>Create By Jungle</Footer>
         </Layout>
       </Layout>
@@ -79,6 +78,7 @@ function About() {
           style={{ padding: 24, minHeight: 360, marginTop: 20 }}
         >
           Bill is a cat.
+          <Link to="/">home</Link>
         </div>
       </Content>
     </>
