@@ -2,7 +2,7 @@ import React from "react";
 import "antd/dist/antd.css";
 import "../index.css";
 import { Menu, Button, Tag, Breadcrumb, Dropdown, Avatar, Layout } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const { Header } = Layout;
 import {
   MenuUnfoldOutlined,
@@ -11,6 +11,7 @@ import {
   HomeOutlined,
   RocketOutlined,
 } from "@ant-design/icons";
+
 function AvatarMenus(props) {
   return (
     <Menu>
@@ -27,6 +28,15 @@ function AvatarMenus(props) {
   );
 }
 function HeaderMenus(props) {
+  let location = useLocation();
+  const routerMap = props.routerMap;
+  const pathName = location.pathname.substring(1);
+  let names = [];
+  if (pathName != "") {
+    const title = routerMap[pathName];
+    names = title.split("/").filter((i) => i);
+  }
+
   return (
     <>
       <Header
@@ -44,9 +54,16 @@ function HeaderMenus(props) {
               props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined
             )}
           </Button>
+
           <Breadcrumb style={{ marginLeft: 20, display: "inline-block" }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>An Application</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/">首页</Link>
+            </Breadcrumb.Item>
+            {names.map((item) => (
+              <Breadcrumb.Item>
+                <Link to={pathName}>{item}</Link>
+              </Breadcrumb.Item>
+            ))}
           </Breadcrumb>
         </div>
         <div
@@ -78,8 +95,8 @@ function HeaderMenus(props) {
           padding: "0 10px",
         }}
       >
-        {props.tags.map((tag) => {
-          return (
+        {props.tags.map((tag) => (
+          <Link to={tag.abselutePath}>
             <Tag
               key={tag.id}
               style={{ height: 24 }}
@@ -94,8 +111,8 @@ function HeaderMenus(props) {
               ></span>{" "}
               {tag.title}
             </Tag>
-          );
-        })}
+          </Link>
+        ))}
       </Header>
     </>
   );
