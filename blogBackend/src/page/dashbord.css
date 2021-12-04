@@ -1,0 +1,54 @@
+.hover-icon-1:hover {
+  color: #fff;
+  background-color: brown;
+  border-radius: 15%;
+  font-size: 75px;
+}
+.hover-icon-1 {
+  color: brown;
+  font-size: 70px;
+  margin-right: 50px;
+  width: 75px;
+  height: 75px;
+}
+.hover-icon-2:hover {
+  color: #fff;
+  background-color: rgb(39, 169, 202);
+  border-radius: 15%;
+  font-size: 75px;
+}
+.hover-icon-2 {
+  color: rgb(39, 169, 202);
+  font-size: 70px;
+  margin-right: 50px;
+  width: 75px;
+  height: 75px;
+}
+
+.hover-icon-3:hover {
+  color: #fff;
+  background-color: rgb(69, 216, 88);
+  border-radius: 15%;
+  font-size: 75px;
+}
+.hover-icon-3 {
+  color: rgb(69, 216, 88);
+  font-size: 70px;
+  margin-right: 50px;
+  width: 75px;
+  height: 75px;
+}
+
+.hover-icon-4:hover {
+  color: #fff;
+  background-color: rgb(154, 189, 27);
+  border-radius: 15%;
+  font-size: 75px;
+}
+.hover-icon-4 {
+  color: rgb(154, 189, 27);
+  font-size: 70px;
+  margin-right: 50px;
+  width: 75px;
+  height: 75px;
+}

@@ -1,0 +1,44 @@
+{
+  "id": "2987873",
+  "name": "test",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8332334",
+      "name": "Book",
+      "font_class": "My-Book",
+      "unicode": "e693",
+      "unicode_decimal": 59027
+    },
+    {
+      "icon_id": "1842066",
+      "name": "book",
+      "font_class": "book",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "7876854",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "11556759",
+      "name": "nonetwork",
+      "font_class": "nonetwork",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "6664158",
+      "name": "eye",
+      "font_class": "eye",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    }
+  ]
+}

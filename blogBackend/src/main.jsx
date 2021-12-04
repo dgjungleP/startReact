@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Routes, Route, Link, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./index.css";
 import { HeaderMenus } from "./page/header";
 import { SiderMenus } from "./page/sider";
+import { DashBord } from "./page/dashbord";
 import { Layout } from "antd";
-const { Content, Footer } = Layout;
+const { Footer } = Layout;
 
 const SubMenus = [
   { id: 1, title: "博客管理", path: "blog" },
@@ -124,7 +125,7 @@ function BasePage(props) {
             routerMap={RouterMap}
           />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<DashBord />} />
           </Routes>
           <Footer style={{ textAlign: "center" }}>Create By Jungle</Footer>
         </Layout>
@@ -133,20 +134,6 @@ function BasePage(props) {
   );
 }
 
-function Home() {
-  return (
-    <>
-      <Content style={{ margin: "0 16px" }}>
-        <div
-          className="site-layout-background"
-          style={{ padding: 24, minHeight: 360, marginTop: 20 }}
-        >
-          Bill is a cat.
-        </div>
-      </Content>
-    </>
-  );
-}
 ReactDOM.render(
   <BrowserRouter>
     <BasePage />
