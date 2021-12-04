@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import "antd/dist/antd.css";
 import "./index.css";
 import { HeaderMenus } from "./page/header";
 import { SiderMenus } from "./page/sider";

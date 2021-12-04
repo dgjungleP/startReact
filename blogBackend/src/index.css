@@ -1,5 +1,5 @@
 @import "./assest/img/fonts/iconfont.css";
-
+@import "antd/dist/antd.css";
 #components-layout-demo-side .logo {
   height: 32px;
   margin: 16px;
