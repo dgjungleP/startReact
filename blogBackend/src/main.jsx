@@ -12,6 +12,7 @@ const { Footer } = Layout;
 const SubMenus = [
   { id: 1, title: "博客管理", path: "blog" },
   { id: 2, title: "监控中心", path: "monitor" },
+  { id: -1, title: "其他", path: "extra" },
 ];
 const menusItems = [
   {
@@ -70,7 +71,13 @@ const menusItems = [
     path: "mysql",
     abselutePath: "monitor/mysql",
   },
-  { id: 9, parent: -1, title: "接口管理", path: "api", abselutePath: "api" },
+  {
+    id: 9,
+    parent: -1,
+    title: "接口管理",
+    path: "api",
+    abselutePath: "extra/api",
+  },
 ];
 const RouterMap = {};
 makeRouterMap();

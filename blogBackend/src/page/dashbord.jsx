@@ -1,8 +1,6 @@
 import React from "react";
 import "antd/dist/antd.css";
 import { Card, Layout, Row, Statistic } from "antd";
-import ReactECharts from "echarts-for-react";
-import { EyeTwoTone } from "@ant-design/icons";
 import "./dashbord.css";
 const { Content } = Layout;
 function DashBord() {

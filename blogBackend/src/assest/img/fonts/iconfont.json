@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "145433",
+      "name": "设置",
+      "font_class": "extra",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "219595",
+      "name": "blog",
+      "font_class": "blog",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "9340469",
+      "name": "monitoring",
+      "font_class": "monitor",
+      "unicode": "e88e",
+      "unicode_decimal": 59534
+    },
+    {
       "icon_id": "8332334",
       "name": "Book",
       "font_class": "My-Book",
