@@ -57,7 +57,9 @@ function HeaderMenus(props) {
 
           <Breadcrumb style={{ marginLeft: 20, display: "inline-block" }}>
             <Breadcrumb.Item>
-              <Link to="/">首页</Link>
+              <Link to="/" onClick={() => props.changeSelectedTag({})}>
+                首页
+              </Link>
             </Breadcrumb.Item>
             {names.map((item) => (
               <Breadcrumb.Item>
