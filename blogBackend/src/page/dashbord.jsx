@@ -14,10 +14,26 @@ function DashBord() {
           style={{ padding: 24, minHeight: 360, marginTop: 20 }}
         >
           <Row justify="space-between" gutter={[10, 15]}>
-            <TitleWithIcon className="icon-eye  hover-icon-1"></TitleWithIcon>
-            <TitleWithIcon className="icon-My-Book  hover-icon-2"></TitleWithIcon>
-            <TitleWithIcon className="icon-user hover-icon-3"></TitleWithIcon>
-            <TitleWithIcon className="icon-nonetwork hover-icon-4"></TitleWithIcon>
+            <TitleWithIcon
+              className="icon-eye  hover-icon-1"
+              title="浏览量"
+              value="2000"
+            ></TitleWithIcon>
+            <TitleWithIcon
+              className="icon-My-Book  hover-icon-2"
+              title="博客数量"
+              value="2000"
+            ></TitleWithIcon>
+            <TitleWithIcon
+              className="icon-user hover-icon-3"
+              title="在线用户"
+              value="2000"
+            ></TitleWithIcon>
+            <TitleWithIcon
+              className="icon-nonetwork hover-icon-4"
+              title="请求量"
+              value="2000"
+            ></TitleWithIcon>
           </Row>
         </div>
       </Content>
@@ -32,7 +48,7 @@ function TitleWithIcon(props) {
           className={"iconfont " + props.className}
           style={{ display: "flex", alignItems: "center" }}
         ></span>
-        <Statistic title="Hello" value="200000"></Statistic>
+        <Statistic title={props.title} value={props.value}></Statistic>
       </div>
     </Card>
   );
