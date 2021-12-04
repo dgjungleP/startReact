@@ -13,7 +13,7 @@ function DashBord() {
           className="site-layout-background"
           style={{ padding: 24, minHeight: 360, marginTop: 20 }}
         >
-          <Row justify="space-between">
+          <Row justify="space-between" gutter={[10, 15]}>
             <TitleWithIcon className="icon-eye  hover-icon-1"></TitleWithIcon>
             <TitleWithIcon className="icon-My-Book  hover-icon-2"></TitleWithIcon>
             <TitleWithIcon className="icon-user hover-icon-3"></TitleWithIcon>
