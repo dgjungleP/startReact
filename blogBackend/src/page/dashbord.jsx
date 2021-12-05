@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { Card, Layout, Row, Statistic } from "antd";
 import "./dashbord.css";
@@ -18,6 +18,13 @@ function getVirtulData(year) {
     ]);
   }
   return data;
+}
+function LazyShowEcharts(props) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    setShow(true);
+  }, []);
+  return show && <ReactEcharts option={props.options} />;
 }
 function DayCount() {
   const options = {
@@ -52,7 +59,7 @@ function DayCount() {
     },
   };
 
-  return <ReactEcharts option={options} lazyUpdate={true} />;
+  return <LazyShowEcharts options={options}></LazyShowEcharts>;
 }
 function Count() {
   const options = {
@@ -97,7 +104,11 @@ function Count() {
       },
     ],
   };
-  return <ReactEcharts option={options}></ReactEcharts>;
+  return (
+    <div style={{ width: "45%" }}>
+      <LazyShowEcharts options={options}></LazyShowEcharts>
+    </div>
+  );
 }
 function Linke() {
   const options = {
@@ -143,7 +154,7 @@ function Linke() {
       },
     ],
   };
-  return <ReactEcharts option={options}></ReactEcharts>;
+  return <LazyShowEcharts options={options}></LazyShowEcharts>;
 }
 const TitleMap = [
   { id: 1, title: "浏览量", value: 200, icon: "eye" },
@@ -173,12 +184,8 @@ function DashBord() {
           <div
             style={{ display: "flex", alignItems: "center", marginTop: "5%" }}
           >
-            <div style={{ width: "45%" }}>
-              <Count></Count>
-            </div>
-            <div style={{ width: "45%" }}>
-              <Count></Count>
-            </div>
+            <Count></Count>
+            <Count></Count>
           </div>
           <Linke></Linke>
         </div>
