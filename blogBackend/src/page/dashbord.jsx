@@ -24,14 +24,16 @@ function LazyShowEcharts(props) {
   useEffect(() => {
     setShow(true);
   }, []);
-  return show && <ReactEcharts option={props.options} />;
+  return (
+    show && <ReactEcharts option={props.options} style={{ marginTop: "5%" }} />
+  );
 }
-function DayCount() {
+function DayCount(props) {
   const options = {
     title: {
       top: 30,
       left: "center",
-      text: "Daily Step Count",
+      text: props.title,
     },
     tooltip: {},
     visualMap: {
@@ -45,7 +47,7 @@ function DayCount() {
     calendar: {
       top: 120,
       cellSize: ["auto", "auto"],
-      range: "2021",
+      range: props.year,
       itemStyle: {
         borderWidth: 0.5,
       },
@@ -55,16 +57,16 @@ function DayCount() {
     series: {
       type: "heatmap",
       coordinateSystem: "calendar",
-      data: getVirtulData("2021"),
+      data: props.data,
     },
   };
 
   return <LazyShowEcharts options={options}></LazyShowEcharts>;
 }
-function Count() {
+function Count(props) {
   const options = {
     title: {
-      text: "Nightingale Chart",
+      text: props.title,
       left: "center",
     },
     tooltip: {
@@ -94,13 +96,7 @@ function Count() {
         labelLine: {
           show: false,
         },
-        data: [
-          { value: 1048, name: "Search Engine" },
-          { value: 735, name: "Direct" },
-          { value: 580, name: "Email" },
-          { value: 484, name: "Union Ads" },
-          { value: 300, name: "Video Ads" },
-        ],
+        data: props.data,
       },
     ],
   };
@@ -110,17 +106,15 @@ function Count() {
     </div>
   );
 }
-function Linke() {
+function Linke(props) {
   const options = {
     title: {
-      text: "Stacked Line",
+      text: props.title,
     },
     tooltip: {
       trigger: "axis",
     },
-    legend: {
-      data: ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"],
-    },
+
     grid: {
       left: "3%",
       right: "4%",
@@ -131,28 +125,11 @@ function Linke() {
     xAxis: {
       type: "category",
       boundaryGap: false,
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     },
     yAxis: {
       type: "value",
     },
-    series: [
-      {
-        name: "Email",
-        type: "line",
-        stack: "Total",
-        data: [120, 132, 101, 134, 90, 230, 210],
-        smooth: true,
-      },
-
-      {
-        name: "Direct",
-        type: "line",
-        stack: "Total",
-        data: [320, 332, 301, 334, 390, 330, 320],
-        smooth: true,
-      },
-    ],
+    series: props.data,
   };
   return <LazyShowEcharts options={options}></LazyShowEcharts>;
 }
@@ -162,7 +139,47 @@ const TitleMap = [
   { id: 3, title: "在线用户", value: 200, icon: "user" },
   { id: 4, title: "请求量", value: 200, icon: "nonetwork" },
 ];
+const CountMap = [
+  {
+    data: [
+      { value: 1048, name: "Search Engine" },
+      { value: 735, name: "Direct" },
+      { value: 580, name: "Email" },
+      { value: 484, name: "Union Ads" },
+      { value: 300, name: "Video Ads" },
+    ],
+    title: "标签",
+  },
+  {
+    data: [
+      { value: 1048, name: "Search Engine" },
+      { value: 735, name: "Direct" },
+      { value: 580, name: "Email" },
+      { value: 484, name: "Union Ads" },
+      { value: 300, name: "Video Ads" },
+    ],
+    title: "标签",
+  },
+];
+const LinkeData = [
+  {
+    name: "Email",
+    type: "line",
+    stack: "Total",
+    data: [120, 132, 101, 134, 90, 230, 210],
+    smooth: true,
+  },
+
+  {
+    name: "Direct",
+    type: "line",
+    stack: "Total",
+    data: [320, 332, 301, 334, 390, 330, 320],
+    smooth: true,
+  },
+];
 function DashBord() {
+  const currentDate = new Date();
   return (
     <>
       <Content style={{ margin: "0 16px" }}>
@@ -180,14 +197,21 @@ function DashBord() {
               ></TitleWithIcon>
             ))}
           </Row>
-          <DayCount style={{ marginTop: "5%" }}></DayCount>
-          <div
-            style={{ display: "flex", alignItems: "center", marginTop: "5%" }}
-          >
-            <Count></Count>
-            <Count></Count>
+          <DayCount
+            data={[]}
+            title={"页面访问量"}
+            year={currentDate.getFullYear()}
+          ></DayCount>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            {CountMap.map((count) => (
+              <Count
+                key={count.title}
+                data={count.data}
+                title={count.title}
+              ></Count>
+            ))}
           </div>
-          <Linke></Linke>
+          <Linke data={LinkeData} title={"接口请求量"}></Linke>
         </div>
       </Content>
     </>
