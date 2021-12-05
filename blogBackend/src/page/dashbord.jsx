@@ -107,6 +107,8 @@ function Count(props) {
   );
 }
 function Linke(props) {
+  debugger;
+  const legend = props.data.map((data) => data.name);
   const options = {
     title: {
       text: props.title,
@@ -114,7 +116,7 @@ function Linke(props) {
     tooltip: {
       trigger: "axis",
     },
-
+    legend: { data: legend },
     grid: {
       left: "3%",
       right: "4%",
@@ -158,7 +160,7 @@ const CountMap = [
       { value: 484, name: "Union Ads" },
       { value: 300, name: "Video Ads" },
     ],
-    title: "标签",
+    title: "分类",
   },
 ];
 const LinkeData = [
