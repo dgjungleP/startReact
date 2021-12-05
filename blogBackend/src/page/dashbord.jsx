@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "antd/dist/antd.css";
 import { Card, Layout, Row, Statistic } from "antd";
 import "./dashbord.css";
@@ -52,7 +52,7 @@ function DayCount() {
     },
   };
 
-  return <ReactEcharts option={options} />;
+  return <ReactEcharts option={options} lazyUpdate={true} />;
 }
 function Count() {
   const options = {
@@ -116,11 +116,7 @@ function Linke() {
       bottom: "3%",
       containLabel: true,
     },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-    },
+
     xAxis: {
       type: "category",
       boundaryGap: false,
@@ -149,7 +145,12 @@ function Linke() {
   };
   return <ReactEcharts option={options}></ReactEcharts>;
 }
-
+const TitleMap = [
+  { id: 1, title: "浏览量", value: 200, icon: "eye" },
+  { id: 2, title: "博客数量", value: 200, icon: "My-Book" },
+  { id: 3, title: "在线用户", value: 200, icon: "user" },
+  { id: 4, title: "请求量", value: 200, icon: "nonetwork" },
+];
 function DashBord() {
   return (
     <>
@@ -159,26 +160,14 @@ function DashBord() {
           style={{ padding: 24, minHeight: 360, marginTop: 20 }}
         >
           <Row justify="space-between" gutter={[10, 15]}>
-            <TitleWithIcon
-              className="icon-eye  hover-icon-1"
-              title="浏览量"
-              value="2000"
-            ></TitleWithIcon>
-            <TitleWithIcon
-              className="icon-My-Book  hover-icon-2"
-              title="博客数量"
-              value="2000"
-            ></TitleWithIcon>
-            <TitleWithIcon
-              className="icon-user hover-icon-3"
-              title="在线用户"
-              value="2000"
-            ></TitleWithIcon>
-            <TitleWithIcon
-              className="icon-nonetwork hover-icon-4"
-              title="请求量"
-              value="2000"
-            ></TitleWithIcon>
+            {TitleMap.map((title) => (
+              <TitleWithIcon
+                key={title.id}
+                className={"icon-" + title.icon + " hover-icon-" + title.id}
+                title={title.title}
+                value={title.value}
+              ></TitleWithIcon>
+            ))}
           </Row>
           <DayCount style={{ marginTop: "5%" }}></DayCount>
           <div
