@@ -1,24 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "antd/dist/antd.css";
 import { Card, Layout, Row, Statistic } from "antd";
 import "./dashbord.css";
 import ReactEcharts from "echarts-for-react";
-import { time, number } from "echarts";
 const { Content } = Layout;
 
-function getVirtulData(year) {
-  var date = +number.parseDate(year + "-01-01");
-  var end = +number.parseDate(+year + 1 + "-01-01");
-  var dayTime = 3600 * 24 * 1000;
-  var data = [];
-  for (var currentTime = date; currentTime < end; currentTime += dayTime) {
-    data.push([
-      time.format(+currentTime, "{yyyy}-{MM}-{dd}"),
-      Math.floor(Math.random() * 500),
-    ]);
-  }
-  return data;
-}
 function LazyShowEcharts(props) {
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -107,7 +92,6 @@ function Count(props) {
   );
 }
 function Linke(props) {
-  debugger;
   const legend = props.data.map((data) => data.name);
   const options = {
     title: {

@@ -4,8 +4,9 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./index.css";
 import { HeaderMenus } from "./page/header";
 import { SiderMenus } from "./page/sider";
-import { DashBord } from "./page/dashbord";
+import { DashBord } from "./page/content/dashbord";
 import { Layout } from "antd";
+import { Category } from "./page/content/category";
 const { Footer } = Layout;
 
 const SubMenus = [
@@ -132,6 +133,7 @@ function BasePage(props) {
           />
           <Routes>
             <Route path="/" element={<DashBord />} />
+            <Route path="/blog/class" element={<Category />} />
           </Routes>
           <Footer style={{ textAlign: "center" }}>Create By Jungle</Footer>
         </Layout>
