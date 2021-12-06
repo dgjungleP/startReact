@@ -6,7 +6,7 @@ import { HeaderMenus } from "./page/header";
 import { SiderMenus } from "./page/sider";
 import { DashBord } from "./page/content/dashbord";
 import { Layout } from "antd";
-import { Category } from "./page/content/category";
+import { BlogList, CategoryList, TagList } from "./page/content/list";
 const { Footer, Content } = Layout;
 
 const SubMenus = [
@@ -137,8 +137,10 @@ function BasePage(props) {
               style={{ padding: 24, minHeight: 360, marginTop: 20 }}
             >
               <Routes>
-                <Route path="/" element={<DashBord />} />
-                <Route path="/blog/class" element={<Category />} />
+                <Route path="/index" element={<DashBord />} />
+                <Route path="/blog/class" element={<CategoryList />} />
+                <Route path="/blog/blog" element={<BlogList />} />
+                <Route path="/blog/tag" element={<TagList />} />
               </Routes>
             </div>
           </Content>

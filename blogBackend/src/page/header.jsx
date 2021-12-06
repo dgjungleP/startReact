@@ -31,7 +31,7 @@ function HeaderMenus(props) {
   const routerMap = props.routerMap;
   const pathName = location.pathname.substring(1);
   let names = [];
-  if (pathName != "") {
+  if (pathName != "index") {
     const title = routerMap[pathName];
     names = title.split("/").filter((i) => i);
   }
@@ -56,7 +56,7 @@ function HeaderMenus(props) {
 
           <Breadcrumb style={{ marginLeft: 20, display: "inline-block" }}>
             <Breadcrumb.Item>
-              <Link to="/" onClick={() => props.changeSelectedTag({})}>
+              <Link to="/index" onClick={() => props.changeSelectedTag({})}>
                 首页
               </Link>
             </Breadcrumb.Item>
@@ -105,7 +105,7 @@ function HeaderMenus(props) {
             onClick={() => props.changeSelectedTag(tag)}
             onClose={() => {
               props.closeTag(tag);
-              navigate("/");
+              navigate("/index");
             }}
           >
             <Link to={tag.abselutePath}>
