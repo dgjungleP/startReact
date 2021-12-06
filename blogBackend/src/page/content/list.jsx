@@ -165,13 +165,19 @@ function TagList() {
 }
 
 function CategoryCreateModel() {
-  const [category, changeCategory] = useState({});
+  const [name, changeName] = useState("");
+  const [description, changeDescription] = useState("");
   const innerModel = (
     <div>
-      <BaseInput title="分类名" value={category.name}></BaseInput>
-      <BaseInput title="分类介绍" value={category.description}></BaseInput>
+      <BaseInput title="分类名" value={name} onChange={changeName}></BaseInput>
+      <BaseInput
+        title="分类介绍"
+        value={description}
+        onChange={changeDescription}
+      ></BaseInput>
     </div>
   );
+  const category = { name, description };
   const insert = (category) => {
     console.log(category);
   };
@@ -185,16 +191,22 @@ function CategoryCreateModel() {
   );
 }
 function BlogCreateModel() {
-  const [blog, changeBlog] = useState({});
+  const [name, changeName] = useState("");
+  const [description, changeDescription] = useState("");
   const innerModel = (
     <div>
-      <BaseInput title="标题" value={blog.name}></BaseInput>
-      <BaseInput title="简介" value={blog.description}></BaseInput>
+      <BaseInput title="标题" value={name} onChange={changeName}></BaseInput>
+      <BaseInput
+        title="简介"
+        value={description}
+        onChange={changeDescription}
+      ></BaseInput>
     </div>
   );
   const insert = (blog) => {
     console.log(blog);
   };
+  const blog = { name, description };
   return (
     <BaseCreateModel
       title="博客"
@@ -205,15 +217,16 @@ function BlogCreateModel() {
   );
 }
 function TagCreateModel() {
-  const [tag, changeTag] = useState({});
+  const [name, changeName] = useState("");
   const innerModel = (
     <div>
-      <BaseInput title="标签名" value={tag.name}></BaseInput>
+      <BaseInput title="标签名" value={name} onChange={changeName}></BaseInput>
     </div>
   );
   const insert = (tag) => {
     console.log(tag);
   };
+  const tag = { name };
   return (
     <BaseCreateModel
       title="标签"
@@ -224,34 +237,31 @@ function TagCreateModel() {
   );
 }
 function BaseInput(props) {
+  const handleChange = (event) => {
+    props.onChange(event.target.value);
+  };
   return (
     <Row align="middle" style={{ marginTop: 5 }}>
       <Col span={4} style={{ textAlign: "end" }}>
         <span>{props.title} :</span>
       </Col>
       <Col span={16} offset={1}>
-        <Input value={props.value} />
+        <Input value={props.value} onChange={handleChange} />
       </Col>
     </Row>
   );
 }
 function BaseCreateModel(props) {
   const [visible, setVisible] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const data = props.data;
   const onSearch = (value) => console.log(value);
 
   const showModal = () => {
     setVisible(true);
   };
 
-  const handleOk = () => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      props.onInsert(data);
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
+  const handleOk = (data) => {
+    props.onInsert(data);
+    setVisible(false);
   };
 
   const handleCancel = () => {
@@ -277,8 +287,7 @@ function BaseCreateModel(props) {
         <Modal
           title={"创建" + props.title}
           visible={visible}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
+          onOk={() => handleOk(props.data)}
           onCancel={handleCancel}
         >
           {props.innerModel}
