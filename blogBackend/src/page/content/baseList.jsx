@@ -1,11 +1,6 @@
 import React from "react";
 import { Input, Button, Row, Col, Table } from "antd";
-import {
-  PlusOutlined,
-  ClearOutlined,
-  UpOutlined,
-  FormOutlined,
-} from "@ant-design/icons";
+import { ClearOutlined, UpOutlined, FormOutlined } from "@ant-design/icons";
 const { Search } = Input;
 function BaseList(props) {
   const onSearch = (value) => console.log(value);
@@ -47,12 +42,7 @@ function BaseList(props) {
             style={{ width: 200 }}
           />
         </Col>
-        <Col>
-          <Button type="primary">
-            <PlusOutlined />
-            新增{props.title}
-          </Button>
-        </Col>
+        <Col>{props.module}</Col>
         <Col>
           <Button type="primary" danger>
             <ClearOutlined />

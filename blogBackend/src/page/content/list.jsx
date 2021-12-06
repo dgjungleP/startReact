@@ -1,8 +1,11 @@
-import { Row, Tag } from "antd";
-import React from "react";
+import { Tag, Modal, Button } from "antd";
+import React, { useState } from "react";
 import { BaseList } from "./baseList";
-
+import { PlusOutlined } from "@ant-design/icons";
 function CategoryList() {
+  const [data, setData] = useState([]);
+  const onCreate = () => {};
+  const onDelete = () => {};
   const columns = [
     {
       title: "序号",
@@ -40,10 +43,20 @@ function CategoryList() {
   ];
 
   return (
-    <BaseList title="分类" columns={columns} data={[{ name: 1 }]}></BaseList>
+    <BaseList
+      title="分类"
+      columns={columns}
+      data={data}
+      onCreate={onCreate}
+      onDelete={onDelete}
+      module={<CategoryCreateModel></CategoryCreateModel>}
+    ></BaseList>
   );
 }
 function BlogList() {
+  const [data, setData] = useState([]);
+  const onCreate = () => {};
+  const onDelete = () => {};
   const columns = [
     {
       title: "序号",
@@ -93,10 +106,20 @@ function BlogList() {
     },
   ];
   return (
-    <BaseList title="博客" columns={columns} data={[{ name: 1 }]}></BaseList>
+    <BaseList
+      title="博客"
+      columns={columns}
+      data={data}
+      onCreate={onCreate}
+      onDelete={onDelete}
+      module={<BlogCreateModel></BlogCreateModel>}
+    ></BaseList>
   );
 }
 function TagList() {
+  const [data, setData] = useState([]);
+  const onCreate = () => {};
+  const onDelete = () => {};
   const columns = [
     {
       title: "序号",
@@ -131,7 +154,63 @@ function TagList() {
   ];
 
   return (
-    <BaseList title="标签" columns={columns} data={[{ name: 1 }]}></BaseList>
+    <BaseList
+      title="标签"
+      columns={columns}
+      data={data}
+      onCreate={onCreate}
+      onDelete={onDelete}
+      module={<TagCreateModel></TagCreateModel>}
+    ></BaseList>
+  );
+}
+
+function CategoryCreateModel() {
+  return <BaseCreateModel title="分类"></BaseCreateModel>;
+}
+function BlogCreateModel() {
+  return <BaseCreateModel title="博客"></BaseCreateModel>;
+}
+function TagCreateModel() {
+  return <BaseCreateModel title="标签"></BaseCreateModel>;
+}
+
+function BaseCreateModel(props) {
+  const [visible, setVisible] = React.useState(false);
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setVisible(false);
+  };
+  debugger;
+  return (
+    <>
+      <Button type="primary" onClick={showModal}>
+        <PlusOutlined />
+        新增{props.title}
+      </Button>
+      <Modal
+        title={"创建" + props.title}
+        visible={visible}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <p>{"hello"}</p>
+      </Modal>
+    </>
   );
 }
 
