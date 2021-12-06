@@ -1,7 +1,9 @@
-import { Modal, Button, Row, Col, Input } from "antd";
+import { Modal, Button, Row, Col, Input, Select } from "antd";
 import React, { useState } from "react";
 import { PlusOutlined, ClearOutlined } from "@ant-design/icons";
-const { Search } = Input;
+import "./model.css";
+const { Search, TextArea } = Input;
+const { Option } = Select;
 function CategoryCreateModel() {
   const [name, changeName] = useState("");
   const [description, changeDescription] = useState("");
@@ -31,6 +33,16 @@ function CategoryCreateModel() {
 function BlogCreateModel() {
   const [name, changeName] = useState("");
   const [description, changeDescription] = useState("");
+  const children = [];
+  for (let i = 10; i < 36; i++) {
+    children.push(
+      <Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>
+    );
+  }
+
+  function handleChange(value) {
+    console.log(`selected ${value}`);
+  }
   const innerModel = (
     <div>
       <BaseInput title="标题" value={name} onChange={changeName}></BaseInput>
@@ -39,6 +51,66 @@ function BlogCreateModel() {
         value={description}
         onChange={changeDescription}
       ></BaseInput>
+      <Row align="middle" style={{ marginTop: 5 }}>
+        <Col span={4} className="input-title">
+          <span>分类 :</span>
+        </Col>
+        <Col span={5}>
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: "100%" }}
+            placeholder="请选择分类"
+            onChange={handleChange}
+          >
+            {children}
+          </Select>
+        </Col>
+
+        <Col span={1} className="input-title">
+          <span>标签 :</span>
+        </Col>
+        <Col span={5}>
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: "100%" }}
+            placeholder="请选择标签"
+            onChange={handleChange}
+          >
+            {children}
+          </Select>
+        </Col>
+        <Col span={2} className="input-title">
+          <span>推荐等级 :</span>
+        </Col>
+        <Col span={2}>
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: "100%" }}
+            placeholder="请选择等级"
+            onChange={handleChange}
+          >
+            {children}
+          </Select>
+        </Col>
+      </Row>
+      <Row align="middle" style={{ marginTop: 5 }}>
+        <Col
+          span={4}
+          className="input-title"
+          style={{ alignSelf: "flex-start" }}
+        >
+          <span>内容 :</span>
+        </Col>
+        <Col span={16}>
+          <TextArea
+            placeholder="Controlled autosize"
+            autoSize={{ minRows: 20, maxRows: 30 }}
+          />
+        </Col>
+      </Row>
     </div>
   );
   const insert = (blog) => {
@@ -51,6 +123,7 @@ function BlogCreateModel() {
       innerModel={innerModel}
       data={blog}
       onInsert={insert}
+      bigModel
     ></BaseCreateModel>
   );
 }
@@ -80,10 +153,10 @@ function BaseInput(props) {
   };
   return (
     <Row align="middle" style={{ marginTop: 5 }}>
-      <Col span={4} style={{ textAlign: "end" }}>
+      <Col span={4} className="input-title">
         <span>{props.title} :</span>
       </Col>
-      <Col span={16} offset={1}>
+      <Col span={16}>
         <Input value={props.value} onChange={handleChange} />
       </Col>
     </Row>
@@ -127,6 +200,7 @@ function BaseCreateModel(props) {
           visible={visible}
           onOk={() => handleOk(props.data)}
           onCancel={handleCancel}
+          width={props.bigModel ? "" : 500}
         >
           {props.innerModel}
         </Modal>
