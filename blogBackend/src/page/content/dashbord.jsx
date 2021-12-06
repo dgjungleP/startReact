@@ -168,38 +168,31 @@ function DashBord() {
   const currentDate = new Date();
   return (
     <>
-      <Content style={{ margin: "0 16px" }}>
-        <div
-          className="site-layout-background"
-          style={{ padding: 24, minHeight: 360, marginTop: 20 }}
-        >
-          <Row justify="space-between" gutter={[10, 15]}>
-            {TitleMap.map((title) => (
-              <TitleWithIcon
-                key={title.id}
-                className={"icon-" + title.icon + " hover-icon-" + title.id}
-                title={title.title}
-                value={title.value}
-              ></TitleWithIcon>
-            ))}
-          </Row>
-          <DayCount
-            data={[]}
-            title={"页面访问量"}
-            year={currentDate.getFullYear()}
-          ></DayCount>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            {CountMap.map((count) => (
-              <Count
-                key={count.title}
-                data={count.data}
-                title={count.title}
-              ></Count>
-            ))}
-          </div>
-          <Linke data={LinkeData} title={"接口请求量"}></Linke>
-        </div>
-      </Content>
+      <Row justify="space-between" gutter={[10, 15]}>
+        {TitleMap.map((title) => (
+          <TitleWithIcon
+            key={title.id}
+            className={"icon-" + title.icon + " hover-icon-" + title.id}
+            title={title.title}
+            value={title.value}
+          ></TitleWithIcon>
+        ))}
+      </Row>
+      <DayCount
+        data={[]}
+        title={"页面访问量"}
+        year={currentDate.getFullYear()}
+      ></DayCount>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        {CountMap.map((count) => (
+          <Count
+            key={count.title}
+            data={count.data}
+            title={count.title}
+          ></Count>
+        ))}
+      </div>
+      <Linke data={LinkeData} title={"接口请求量"}></Linke>
     </>
   );
 }

@@ -7,7 +7,7 @@ import { SiderMenus } from "./page/sider";
 import { DashBord } from "./page/content/dashbord";
 import { Layout } from "antd";
 import { Category } from "./page/content/category";
-const { Footer } = Layout;
+const { Footer, Content } = Layout;
 
 const SubMenus = [
   { id: 1, title: "博客管理", path: "blog" },
@@ -106,10 +106,10 @@ function BasePage(props) {
   };
   const onCloseTag = (tag) => {
     let newTags = tags.filter((item) => tag.id != item.id);
+    changeTags(newTags);
     if (tag.id == selectedTag.id) {
       changeSelectedTag({});
     }
-    changeTags(newTags);
   };
 
   return (
@@ -131,10 +131,17 @@ function BasePage(props) {
             selectedTag={selectedTag}
             routerMap={RouterMap}
           />
-          <Routes>
-            <Route path="/" element={<DashBord />} />
-            <Route path="/blog/class" element={<Category />} />
-          </Routes>
+          <Content style={{ margin: "0 16px" }}>
+            <div
+              className="site-layout-background"
+              style={{ padding: 24, minHeight: 360, marginTop: 20 }}
+            >
+              <Routes>
+                <Route path="/" element={<DashBord />} />
+                <Route path="/blog/class" element={<Category />} />
+              </Routes>
+            </div>
+          </Content>
           <Footer style={{ textAlign: "center" }}>Create By Jungle</Footer>
         </Layout>
       </Layout>

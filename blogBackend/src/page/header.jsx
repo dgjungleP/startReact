@@ -1,7 +1,7 @@
 import React from "react";
 import "../index.css";
 import { Menu, Button, Tag, Breadcrumb, Dropdown, Avatar, Layout } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const { Header } = Layout;
 import {
   MenuUnfoldOutlined,
@@ -35,7 +35,7 @@ function HeaderMenus(props) {
     const title = routerMap[pathName];
     names = title.split("/").filter((i) => i);
   }
-
+  const navigate = useNavigate();
   return (
     <>
       <Header
@@ -97,22 +97,25 @@ function HeaderMenus(props) {
         }}
       >
         {props.tags.map((tag) => (
-          <Link to={tag.abselutePath}>
-            <Tag
-              key={tag.id}
-              style={{ height: 24 }}
-              closable
-              color={props.selectedTag == tag ? "#87d068" : ""}
-              onClick={() => props.changeSelectedTag(tag)}
-              onClose={() => props.closeTag(tag)}
-            >
+          <Tag
+            key={tag.id}
+            style={{ height: 24 }}
+            closable
+            color={props.selectedTag == tag ? "#87d068" : ""}
+            onClick={() => props.changeSelectedTag(tag)}
+            onClose={() => {
+              props.closeTag(tag);
+              navigate("/");
+            }}
+          >
+            <Link to={tag.abselutePath}>
               <span
                 className="point"
                 hidden={props.selectedTag.id != tag.id}
               ></span>{" "}
               {tag.title}
-            </Tag>
-          </Link>
+            </Link>
+          </Tag>
         ))}
       </Header>
     </>
