@@ -7,6 +7,7 @@ import { SiderMenus } from "./page/sider";
 import { DashBord } from "./page/content/dashbord";
 import { Layout } from "antd";
 import { BlogList, CategoryList, TagList } from "./page/content/list";
+import { Login } from "./login";
 const { Footer, Content } = Layout;
 
 const SubMenus = [
@@ -137,6 +138,7 @@ function BasePage(props) {
               style={{ padding: 24, minHeight: 360, marginTop: 20 }}
             >
               <Routes>
+                <Route path="/" element={<DashBord />} />
                 <Route path="/index" element={<DashBord />} />
                 <Route path="/blog/class" element={<CategoryList />} />
                 <Route path="/blog/blog" element={<BlogList />} />
@@ -153,7 +155,10 @@ function BasePage(props) {
 
 ReactDOM.render(
   <BrowserRouter>
-    <BasePage />
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/*" element={<BasePage />} />
+    </Routes>
   </BrowserRouter>,
   document.getElementById("root")
 );

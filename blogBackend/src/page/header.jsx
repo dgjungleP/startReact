@@ -31,7 +31,7 @@ function HeaderMenus(props) {
   const routerMap = props.routerMap;
   const pathName = location.pathname.substring(1);
   let names = [];
-  if (pathName != "index") {
+  if (pathName && pathName != "index") {
     const title = routerMap[pathName];
     names = title.split("/").filter((i) => i);
   }
