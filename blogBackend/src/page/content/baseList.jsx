@@ -1,9 +1,7 @@
 import React from "react";
 import { Input, Button, Row, Col, Table } from "antd";
 import { ClearOutlined, UpOutlined, FormOutlined } from "@ant-design/icons";
-const { Search } = Input;
 function BaseList(props) {
-  const onSearch = (value) => console.log(value);
   const columns = (props.columns || []).concat({
     title: "操作",
     dataIndex: "operate",
@@ -33,23 +31,7 @@ function BaseList(props) {
   const data = props.data || [];
   return (
     <>
-      <Row align="start" gutter={[15, 50]}>
-        <Col>
-          <Search
-            placeholder={"请输入" + props.title}
-            allowClear
-            onSearch={onSearch}
-            style={{ width: 200 }}
-          />
-        </Col>
-        <Col>{props.module}</Col>
-        <Col>
-          <Button type="primary" danger>
-            <ClearOutlined />
-            删除{props.title}
-          </Button>
-        </Col>
-      </Row>
+      {props.module}
       <Table
         rowSelection={{
           type: "checkbox",

@@ -1,7 +1,9 @@
-import { Tag, Modal, Button } from "antd";
+import { Tag, Modal, Button, Row, Col, Input } from "antd";
 import React, { useState } from "react";
 import { BaseList } from "./baseList";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, ClearOutlined } from "@ant-design/icons";
+const { Search } = Input;
+
 function CategoryList() {
   const [data, setData] = useState([]);
   const onCreate = () => {};
@@ -44,7 +46,6 @@ function CategoryList() {
 
   return (
     <BaseList
-      title="分类"
       columns={columns}
       data={data}
       onCreate={onCreate}
@@ -107,7 +108,6 @@ function BlogList() {
   ];
   return (
     <BaseList
-      title="博客"
       columns={columns}
       data={data}
       onCreate={onCreate}
@@ -155,7 +155,6 @@ function TagList() {
 
   return (
     <BaseList
-      title="标签"
       columns={columns}
       data={data}
       onCreate={onCreate}
@@ -166,18 +165,81 @@ function TagList() {
 }
 
 function CategoryCreateModel() {
-  return <BaseCreateModel title="分类"></BaseCreateModel>;
+  const [category, changeCategory] = useState({});
+  const innerModel = (
+    <div>
+      <BaseInput title="分类名" value={category.name}></BaseInput>
+      <BaseInput title="分类介绍" value={category.description}></BaseInput>
+    </div>
+  );
+  const insert = (category) => {
+    console.log(category);
+  };
+  return (
+    <BaseCreateModel
+      title="分类"
+      innerModel={innerModel}
+      data={category}
+      onInsert={insert}
+    ></BaseCreateModel>
+  );
 }
 function BlogCreateModel() {
-  return <BaseCreateModel title="博客"></BaseCreateModel>;
+  const [blog, changeBlog] = useState({});
+  const innerModel = (
+    <div>
+      <BaseInput title="标题" value={blog.name}></BaseInput>
+      <BaseInput title="简介" value={blog.description}></BaseInput>
+    </div>
+  );
+  const insert = (blog) => {
+    console.log(blog);
+  };
+  return (
+    <BaseCreateModel
+      title="博客"
+      innerModel={innerModel}
+      data={blog}
+      onInsert={insert}
+    ></BaseCreateModel>
+  );
 }
 function TagCreateModel() {
-  return <BaseCreateModel title="标签"></BaseCreateModel>;
+  const [tag, changeTag] = useState({});
+  const innerModel = (
+    <div>
+      <BaseInput title="标签名" value={tag.name}></BaseInput>
+    </div>
+  );
+  const insert = (tag) => {
+    console.log(tag);
+  };
+  return (
+    <BaseCreateModel
+      title="标签"
+      innerModel={innerModel}
+      data={tag}
+      onInsert={insert}
+    ></BaseCreateModel>
+  );
 }
-
+function BaseInput(props) {
+  return (
+    <Row align="middle" style={{ marginTop: 5 }}>
+      <Col span={4} style={{ textAlign: "end" }}>
+        <span>{props.title} :</span>
+      </Col>
+      <Col span={16} offset={1}>
+        <Input value={props.value} />
+      </Col>
+    </Row>
+  );
+}
 function BaseCreateModel(props) {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
+  const data = props.data;
+  const onSearch = (value) => console.log(value);
 
   const showModal = () => {
     setVisible(true);
@@ -186,7 +248,9 @@ function BaseCreateModel(props) {
   const handleOk = () => {
     setConfirmLoading(true);
     setTimeout(() => {
+      props.onInsert(data);
       setVisible(false);
+      setConfirmLoading(false);
     }, 2000);
   };
 
@@ -194,23 +258,39 @@ function BaseCreateModel(props) {
     console.log("Clicked cancel button");
     setVisible(false);
   };
-  debugger;
+  const onDelete = () => {};
   return (
-    <>
-      <Button type="primary" onClick={showModal}>
-        <PlusOutlined />
-        新增{props.title}
-      </Button>
-      <Modal
-        title={"创建" + props.title}
-        visible={visible}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
-        <p>{"hello"}</p>
-      </Modal>
-    </>
+    <Row align="start" gutter={[15, 50]}>
+      <Col>
+        <Search
+          placeholder={"请输入" + props.title}
+          allowClear
+          onSearch={onSearch}
+          style={{ width: 200 }}
+        />
+      </Col>
+      <Col>
+        <Button type="primary" onClick={showModal}>
+          <PlusOutlined />
+          新增{props.title}
+        </Button>
+        <Modal
+          title={"创建" + props.title}
+          visible={visible}
+          onOk={handleOk}
+          confirmLoading={confirmLoading}
+          onCancel={handleCancel}
+        >
+          {props.innerModel}
+        </Modal>
+      </Col>
+      <Col>
+        <Button type="primary" danger onClick={() => onDelete()}>
+          <ClearOutlined />
+          删除{props.title}
+        </Button>
+      </Col>
+    </Row>
   );
 }
 
