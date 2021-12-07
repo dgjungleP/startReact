@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./index.css";
@@ -8,8 +8,8 @@ import { DashBord } from "./page/content/dashbord";
 import { Layout } from "antd";
 import { BlogList, CategoryList, TagList } from "./page/content/list";
 import { Login } from "./login";
+import { test } from "./server/test.js";
 const { Footer, Content } = Layout;
-
 const SubMenus = [
   { id: 1, title: "博客管理", path: "blog" },
   { id: 2, title: "监控中心", path: "monitor" },
@@ -80,6 +80,7 @@ const menusItems = [
     abselutePath: "extra/api",
   },
 ];
+
 const RouterMap = {};
 makeRouterMap();
 function makeRouterMap() {
@@ -89,7 +90,9 @@ function makeRouterMap() {
       (parent ? parent.title + "/" : "") + item.title;
   });
 }
-
+test().then((result) => {
+  console.log(result);
+});
 function BasePage(props) {
   const [collapsed, changeCollapsed] = useState(false);
   const [selectedTag, changeSelectedTag] = useState({});
@@ -97,6 +100,7 @@ function BasePage(props) {
   const onCollapse = () => {
     changeCollapsed(!collapsed);
   };
+
   const onChangeTags = (tagItem) => {
     let newTags = [...tags];
     if (tags.every((item) => item.id != tagItem.id)) {

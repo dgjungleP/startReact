@@ -1,5 +1,5 @@
 var canvas1, ctx, W, H;
-if (screen.width >= 988) var mp = 150;
+if (screen.width >= 988) var mp = 250;
 else mp = 75;
 var deactivationTimerHandler,
   reactivationTimerHandler,
