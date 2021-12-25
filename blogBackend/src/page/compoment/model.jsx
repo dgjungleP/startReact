@@ -127,23 +127,22 @@ function BlogCreateModel() {
     ></BaseCreateModel>
   );
 }
-function TagCreateModel() {
+function TagCreateModel(props) {
   const [name, changeName] = useState("");
+  const createTag = props.create;
   const innerModel = (
     <div>
       <BaseInput title="标签名" value={name} onChange={changeName}></BaseInput>
     </div>
   );
-  const insert = (tag) => {
-    console.log(tag);
-  };
+
   const tag = { name };
   return (
     <BaseCreateModel
       title="标签"
       innerModel={innerModel}
       data={tag}
-      onInsert={insert}
+      onInsert={createTag}
     ></BaseCreateModel>
   );
 }

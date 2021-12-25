@@ -1,6 +1,7 @@
 import { Tag } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { BaseList } from "./baseList";
+import { getTagList, createTag } from "../../server/blogservice.js";
 import {
   CategoryCreateModel,
   BlogCreateModel,
@@ -108,6 +109,7 @@ function BlogList() {
       dataIndex: "clickNumber",
     },
   ];
+
   return (
     <BaseList
       columns={columns}
@@ -120,7 +122,11 @@ function BlogList() {
 }
 function TagList() {
   const [data, setData] = useState([]);
-  const onCreate = () => {};
+  const onCreate = (request) => {
+    createTag(request).then(() => {
+      freshList();
+    });
+  };
   const onDelete = () => {};
   const columns = [
     {
@@ -154,14 +160,21 @@ function TagList() {
       align: "center",
     },
   ];
-
+  const freshList = () => {
+    getTagList().then((response) => {
+      setData(response.data.data);
+    });
+  };
+  useEffect(() => {
+    freshList();
+  }, []);
   return (
     <BaseList
       columns={columns}
       data={data}
       onCreate={onCreate}
       onDelete={onDelete}
-      module={<TagCreateModel></TagCreateModel>}
+      module={<TagCreateModel create={onCreate}></TagCreateModel>}
     ></BaseList>
   );
 }

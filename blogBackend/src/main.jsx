@@ -8,7 +8,6 @@ import { DashBord } from "./page/content/dashbord";
 import { Layout } from "antd";
 import { BlogList, CategoryList, TagList } from "./page/content/list";
 import { Login } from "./login";
-import { test } from "./server/test.js";
 const { Footer, Content } = Layout;
 const SubMenus = [
   { id: 1, title: "博客管理", path: "blog" },
@@ -90,9 +89,7 @@ function makeRouterMap() {
       (parent ? parent.title + "/" : "") + item.title;
   });
 }
-test().then((result) => {
-  console.log(result);
-});
+
 function BasePage(props) {
   const [collapsed, changeCollapsed] = useState(false);
   const [selectedTag, changeSelectedTag] = useState({});
