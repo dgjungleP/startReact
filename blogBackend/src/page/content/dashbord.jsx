@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Layout, Row, Statistic } from "antd";
 import "./dashbord.css";
 import ReactEcharts from "echarts-for-react";
-const { Content } = Layout;
+import { getHeader } from "../../server/dashbordservice.js";
 
 function LazyShowEcharts(props) {
   const [show, setShow] = useState(false);
@@ -119,12 +119,7 @@ function Linke(props) {
   };
   return <LazyShowEcharts options={options}></LazyShowEcharts>;
 }
-const TitleMap = [
-  { id: 1, title: "浏览量", value: 200, icon: "eye" },
-  { id: 2, title: "博客数量", value: 200, icon: "My-Book" },
-  { id: 3, title: "在线用户", value: 200, icon: "user" },
-  { id: 4, title: "请求量", value: 200, icon: "nonetwork" },
-];
+
 const CountMap = [
   {
     data: [
@@ -165,11 +160,33 @@ const LinkeData = [
   },
 ];
 function DashBord() {
+  const [title, setTile] = useState([]);
   const currentDate = new Date();
+
+  const freshHeader = () => {
+    getHeader().then((response) => {
+      const baseHeader = response.data.data;
+      const TitleMap = [
+        { id: 1, title: "浏览量", value: 200, icon: "eye" },
+        {
+          id: 2,
+          title: "博客数量",
+          value: baseHeader.TagCount,
+          icon: "My-Book",
+        },
+        { id: 3, title: "在线用户", value: 200, icon: "user" },
+        { id: 4, title: "请求量", value: 200, icon: "nonetwork" },
+      ];
+      setTile(TitleMap);
+    });
+  };
+  useEffect(() => {
+    freshHeader();
+  }, []);
   return (
     <>
       <Row justify="space-between" gutter={[10, 15]}>
-        {TitleMap.map((title) => (
+        {title.map((title) => (
           <TitleWithIcon
             key={title.id}
             className={"icon-" + title.icon + " hover-icon-" + title.id}
