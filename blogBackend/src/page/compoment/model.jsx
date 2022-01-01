@@ -1,7 +1,8 @@
 import { Modal, Button, Row, Col, Input, Select } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PlusOutlined, ClearOutlined } from "@ant-design/icons";
 import "./model.css";
+import { getCategoryList, getTagList } from "../../server/blogservice";
 const { Search, TextArea } = Input;
 const { Option } = Select;
 function CategoryCreateModel(props) {
@@ -29,25 +30,45 @@ function CategoryCreateModel(props) {
       onInsert={createCategory}
       onDelete={deleteCategory}
       seletctRows={slectRows}
+      prepare={async () => {}}
     ></BaseCreateModel>
   );
 }
 function BlogCreateModel(props) {
-  const [name, changeName] = useState("");
+  const [title, changeName] = useState("");
   const [description, changeDescription] = useState("");
-  const children = [];
-  for (let i = 10; i < 36; i++) {
-    children.push(
-      <Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>
-    );
-  }
-
-  function handleChange(value) {
-    console.log(`selected ${value}`);
+  const [level, changeLevel] = useState("");
+  const [category, chanegeCategory] = useState("");
+  const [tag, changeTag] = useState("");
+  const [content, changeContent] = useState("");
+  const [categoryList, changeCategoryList] = useState([]);
+  const [tagList, changeTagList] = useState([]);
+  const levelList = [];
+  const createBlog = props.create;
+  const deleteBlog = props.delete;
+  const slectRows = props.seletctRows;
+  const getSelectList = async () => {
+    getTagList().then((response) => {
+      const tags = response.data.data;
+      changeTagList(
+        tags.map((tag) => <Option key={tag.id}>{tag.name}</Option>) || []
+      );
+    });
+    getCategoryList().then((response) => {
+      const categorys = response.data.data;
+      changeCategoryList(
+        categorys.map((category) => (
+          <Option key={category.id}>{category.name}</Option>
+        )) || []
+      );
+    });
+  };
+  for (let i = 0; i < 10; i++) {
+    levelList.push(<Option key={i}>{i + 1 + "级"}</Option>);
   }
   const innerModel = (
     <div>
-      <BaseInput title="标题" value={name} onChange={changeName}></BaseInput>
+      <BaseInput title="标题" value={title} onChange={changeName}></BaseInput>
       <BaseInput
         title="简介"
         value={description}
@@ -63,9 +84,9 @@ function BlogCreateModel(props) {
             allowClear
             style={{ width: "100%" }}
             placeholder="请选择分类"
-            onChange={handleChange}
+            onChange={(data) => changeTag(data)}
           >
-            {children}
+            {categoryList}
           </Select>
         </Col>
 
@@ -78,9 +99,9 @@ function BlogCreateModel(props) {
             allowClear
             style={{ width: "100%" }}
             placeholder="请选择标签"
-            onChange={handleChange}
+            onChange={(data) => chanegeCategory(data)}
           >
-            {children}
+            {tagList}
           </Select>
         </Col>
         <Col span={2} className="input-title">
@@ -88,13 +109,12 @@ function BlogCreateModel(props) {
         </Col>
         <Col span={2}>
           <Select
-            mode="multiple"
             allowClear
             style={{ width: "100%" }}
             placeholder="请选择等级"
-            onChange={handleChange}
+            onChange={(level) => changeLevel(level)}
           >
-            {children}
+            {levelList}
           </Select>
         </Col>
       </Row>
@@ -110,19 +130,22 @@ function BlogCreateModel(props) {
           <TextArea
             placeholder="Controlled autosize"
             autoSize={{ minRows: 20, maxRows: 30 }}
+            onBlur={(content) => changeContent(content.currentTarget.value)}
           />
         </Col>
       </Row>
     </div>
   );
-  const createBlog = props.create;
-  const blog = { name, description };
+  const blog = { title, description, tag, category, content, level };
   return (
     <BaseCreateModel
       title="博客"
       innerModel={innerModel}
       data={blog}
       onInsert={createBlog}
+      onDelete={deleteBlog}
+      seletctRows={slectRows}
+      prepare={getSelectList}
       bigModel
     ></BaseCreateModel>
   );
@@ -147,6 +170,7 @@ function TagCreateModel(props) {
       onInsert={createTag}
       onDelete={deleteTag}
       seletctRows={slectRows}
+      prepare={async () => {}}
     ></BaseCreateModel>
   );
 }
@@ -170,7 +194,9 @@ function BaseCreateModel(props) {
   const onSearch = (value) => console.log(value);
 
   const showModal = () => {
-    setVisible(true);
+    props.prepare().then(() => {
+      setVisible(true);
+    });
   };
 
   const handleOk = (data) => {

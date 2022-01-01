@@ -30,7 +30,7 @@ function getBlogList(request) {
   return axios.get(preFix + "blog-list", request);
 }
 function deleteBlog(request) {
-  return axios.delete(preFix + "delete/blog", request);
+  return axios.post(preFix + "delete/blog", request);
 }
 
 export {

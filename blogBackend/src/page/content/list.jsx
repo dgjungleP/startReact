@@ -95,8 +95,19 @@ function CategoryList() {
 }
 function BlogList() {
   const [data, setData] = useState([]);
-  const onCreate = () => {};
-  const onDelete = () => {};
+  const [selectRows, changeRows] = useState([]);
+  const onCreate = (request) => {
+    createBlog(request).then(() => {
+      freshList();
+    });
+  };
+  const onDelete = (request) => {
+    const idList = request.map((data) => data.id).join(",");
+    deleteBlog(idList).then(() => {
+      message.info("Delete Blog Success!!");
+      freshList();
+    });
+  };
   const columns = [
     {
       title: "序号",
@@ -145,14 +156,28 @@ function BlogList() {
       dataIndex: "clickNumber",
     },
   ];
-
+  const freshList = () => {
+    getBlogList().then((response) => {
+      setData(response.data.data || []);
+    });
+  };
+  useEffect(() => {
+    freshList();
+  }, []);
   return (
     <BaseList
       columns={columns}
       data={data}
       onCreate={onCreate}
       onDelete={onDelete}
-      module={<BlogCreateModel create={onCreate}></BlogCreateModel>}
+      onSelect={changeRows}
+      module={
+        <BlogCreateModel
+          create={onCreate}
+          delete={onDelete}
+          seletctRows={selectRows}
+        ></BlogCreateModel>
+      }
     ></BaseList>
   );
 }
