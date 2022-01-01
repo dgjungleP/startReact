@@ -84,7 +84,7 @@ function BlogCreateModel(props) {
             allowClear
             style={{ width: "100%" }}
             placeholder="请选择分类"
-            onChange={(data) => changeTag(data)}
+            onChange={(data) => chanegeCategory(data)}
           >
             {categoryList}
           </Select>
@@ -99,7 +99,7 @@ function BlogCreateModel(props) {
             allowClear
             style={{ width: "100%" }}
             placeholder="请选择标签"
-            onChange={(data) => chanegeCategory(data)}
+            onChange={(data) => changeTag(data)}
           >
             {tagList}
           </Select>

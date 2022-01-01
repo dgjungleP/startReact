@@ -124,15 +124,28 @@ function BlogList() {
     {
       title: "分类",
       dataIndex: "category",
+      render: (category) => (
+        <span>
+          {(category || []).map((category, index) => (
+            <Tag
+              key={category.name}
+              color={index % 2 == 0 ? "magenta" : "cyan"}
+            >
+              {category.name}
+            </Tag>
+          ))}
+        </span>
+      ),
+      align: "center",
     },
     {
       title: "标签",
       dataIndex: "tag",
       render: (tags) => (
         <span>
-          {(tags || ["a", "b"]).map((tag, index) => (
-            <Tag key={tag} color={index % 2 == 0 ? "magenta" : "cyan"}>
-              {tag.toUpperCase()}
+          {(tags || []).map((tag, index) => (
+            <Tag key={tag.name} color={index % 2 == 0 ? "magenta" : "cyan"}>
+              {tag.name}
             </Tag>
           ))}
         </span>
@@ -141,11 +154,11 @@ function BlogList() {
     },
     {
       title: "推荐等级",
-      dataIndex: "supporter",
-      render: (supporter) => (
+      dataIndex: "level",
+      render: (level) => (
         <span>
           <Tag color="#87d068" style={{ fontSize: 15 }}>
-            {supporter || "正常"}
+            {level + 1 + "级" || "正常"}
           </Tag>
         </span>
       ),
@@ -153,7 +166,7 @@ function BlogList() {
     },
     {
       title: "点击数",
-      dataIndex: "clickNumber",
+      dataIndex: "click",
     },
   ];
   const freshList = () => {
