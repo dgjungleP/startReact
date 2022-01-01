@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Layout, Row, Statistic } from "antd";
 import "./dashbord.css";
 import ReactEcharts from "echarts-for-react";
-import { getHeader } from "../../server/dashbordservice.js";
+import { getHeader, getCount } from "../../server/dashbordservice.js";
 
 function LazyShowEcharts(props) {
   const [show, setShow] = useState(false);
@@ -122,24 +122,14 @@ function Linke(props) {
 
 const CountMap = [
   {
-    data: [
-      { value: 1048, name: "Search Engine" },
-      { value: 735, name: "Direct" },
-      { value: 580, name: "Email" },
-      { value: 484, name: "Union Ads" },
-      { value: 300, name: "Video Ads" },
-    ],
+    data: [],
     title: "标签",
+    key: "tag",
   },
   {
-    data: [
-      { value: 1048, name: "Search Engine" },
-      { value: 735, name: "Direct" },
-      { value: 580, name: "Email" },
-      { value: 484, name: "Union Ads" },
-      { value: 300, name: "Video Ads" },
-    ],
+    data: [],
     title: "分类",
+    key: "category",
   },
 ];
 const LinkeData = [
@@ -172,14 +162,27 @@ const TitleMap = [
 ];
 function DashBord() {
   const [title, setTile] = useState([]);
+  const [count, setCount] = useState([]);
   const currentDate = new Date();
   const freshHeader = () => {
     getHeader().then((response) => {
       const baseHeader = response.data.data;
+      TitleMap[1].value = baseHeader.BlogCount;
+      debugger;
       setTile(TitleMap);
     });
   };
-  const freshCount = () => {};
+  const freshCount = () => {
+    getCount().then((response) => {
+      const baseCount = response.data.data;
+      (CountMap.find((data) => data.key === "tag") || {}).data =
+        baseCount.TagCount;
+
+      (CountMap.find((data) => data.key === "category") || {}).data =
+        baseCount.CategoryCount;
+      setCount(CountMap);
+    });
+  };
   useEffect(() => {
     freshHeader();
     freshCount();
@@ -202,7 +205,7 @@ function DashBord() {
         year={currentDate.getFullYear()}
       ></DayCount>
       <div style={{ display: "flex", alignItems: "center" }}>
-        {CountMap.map((count) => (
+        {count.map((count) => (
           <Count
             key={count.title}
             data={count.data}
