@@ -20,12 +20,19 @@ import {
 } from "../compoment/model";
 function CategoryList() {
   const [data, setData] = useState([]);
+  const [selectRows, changeRows] = useState([]);
   const onCreate = (request) => {
     createCategory(request).then(() => {
       freshList();
     });
   };
-  const onDelete = () => {};
+  const onDelete = (request) => {
+    const idList = request.map((data) => data.id).join(",");
+    deleteCategory(idList).then(() => {
+      message.info("Delete Category Success!!");
+      freshList();
+    });
+  };
   const columns = [
     {
       title: "序号",
@@ -63,7 +70,7 @@ function CategoryList() {
   ];
   const freshList = () => {
     getCategoryList().then((response) => {
-      setData(response.data.data);
+      setData(response.data.data || []);
     });
   };
   useEffect(() => {
@@ -75,7 +82,14 @@ function CategoryList() {
       data={data}
       onCreate={onCreate}
       onDelete={onDelete}
-      module={<CategoryCreateModel create={onCreate}></CategoryCreateModel>}
+      onSelect={changeRows}
+      module={
+        <CategoryCreateModel
+          create={onCreate}
+          delete={onDelete}
+          seletctRows={selectRows}
+        ></CategoryCreateModel>
+      }
     ></BaseList>
   );
 }

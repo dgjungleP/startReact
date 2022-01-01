@@ -20,7 +20,7 @@ function getCategoryList(request) {
   return axios.get(preFix + "category-list", request);
 }
 function deleteCategory(request) {
-  return axios.delete(preFix + "category", request);
+  return axios.post(preFix + "delete/category", request);
 }
 
 function createBlog(request) {
@@ -30,7 +30,7 @@ function getBlogList(request) {
   return axios.get(preFix + "blog-list", request);
 }
 function deleteBlog(request) {
-  return axios.delete(preFix + "blog", request);
+  return axios.delete(preFix + "delete/blog", request);
 }
 
 export {

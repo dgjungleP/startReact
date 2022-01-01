@@ -7,6 +7,8 @@ const { Option } = Select;
 function CategoryCreateModel(props) {
   const [name, changeName] = useState("");
   const [description, changeDescription] = useState("");
+  const deleteCategory = props.delete;
+  const slectRows = props.seletctRows;
   const innerModel = (
     <div>
       <BaseInput title="分类名" value={name} onChange={changeName}></BaseInput>
@@ -25,6 +27,8 @@ function CategoryCreateModel(props) {
       innerModel={innerModel}
       data={category}
       onInsert={createCategory}
+      onDelete={deleteCategory}
+      seletctRows={slectRows}
     ></BaseCreateModel>
   );
 }
