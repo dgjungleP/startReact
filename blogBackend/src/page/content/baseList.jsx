@@ -9,12 +9,12 @@ function BaseList(props) {
     dataIndex: "operate",
     render: (_, b) => (
       <Row align="start" gutter={[15, 50]}>
-        <Col>
+        {/* <Col>
           <Button style={{ backgroundColor: "#E6A23C", color: "#fff" }}>
             <UpOutlined />
             置顶
           </Button>
-        </Col>
+        </Col> */}
         <Col>
           <Button style={{ background: "#0F0C11", color: "#fff" }}>
             <FormOutlined />
