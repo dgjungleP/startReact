@@ -3,5 +3,8 @@ const preFix = "/dashboard";
 function getHeader() {
   return axios.get(preFix + "/header");
 }
+function getHeader() {
+  return axios.get(preFix + "/count");
+}
 
 export { getHeader };
