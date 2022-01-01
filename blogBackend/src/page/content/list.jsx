@@ -1,7 +1,18 @@
 import { Tag } from "antd";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BaseList } from "./baseList";
-import { getTagList, createTag } from "../../server/blogservice.js";
+import { message } from "antd";
+import {
+  getTagList,
+  createTag,
+  createCategory,
+  getCategoryList,
+  deleteTag,
+  deleteBlog,
+  deleteCategory,
+  createBlog,
+  getBlogList,
+} from "../../server/blogservice.js";
 import {
   CategoryCreateModel,
   BlogCreateModel,
@@ -9,7 +20,11 @@ import {
 } from "../compoment/model";
 function CategoryList() {
   const [data, setData] = useState([]);
-  const onCreate = () => {};
+  const onCreate = (request) => {
+    createCategory(request).then(() => {
+      freshList();
+    });
+  };
   const onDelete = () => {};
   const columns = [
     {
@@ -31,7 +46,7 @@ function CategoryList() {
 
     {
       title: "创建时间",
-      dataIndex: "createDate",
+      dataIndex: "create_time",
     },
     {
       title: "状态",
@@ -46,14 +61,21 @@ function CategoryList() {
       align: "center",
     },
   ];
-
+  const freshList = () => {
+    getCategoryList().then((response) => {
+      setData(response.data.data);
+    });
+  };
+  useEffect(() => {
+    freshList();
+  }, []);
   return (
     <BaseList
       columns={columns}
       data={data}
       onCreate={onCreate}
       onDelete={onDelete}
-      module={<CategoryCreateModel></CategoryCreateModel>}
+      module={<CategoryCreateModel create={onCreate}></CategoryCreateModel>}
     ></BaseList>
   );
 }
@@ -116,18 +138,25 @@ function BlogList() {
       data={data}
       onCreate={onCreate}
       onDelete={onDelete}
-      module={<BlogCreateModel></BlogCreateModel>}
+      module={<BlogCreateModel create={onCreate}></BlogCreateModel>}
     ></BaseList>
   );
 }
 function TagList() {
   const [data, setData] = useState([]);
+  const [selectRows, changeRows] = useState([]);
   const onCreate = (request) => {
     createTag(request).then(() => {
       freshList();
     });
   };
-  const onDelete = () => {};
+  const onDelete = (request) => {
+    const idList = request.map((data) => data.id).join(",");
+    deleteTag(idList).then(() => {
+      message.info("Delete Tag Success!!");
+      freshList();
+    });
+  };
   const columns = [
     {
       title: "序号",
@@ -145,7 +174,7 @@ function TagList() {
 
     {
       title: "创建时间",
-      dataIndex: "createDate",
+      dataIndex: "create_time",
     },
     {
       title: "状态",
@@ -162,7 +191,7 @@ function TagList() {
   ];
   const freshList = () => {
     getTagList().then((response) => {
-      setData(response.data.data);
+      setData(response.data.data || []);
     });
   };
   useEffect(() => {
@@ -174,7 +203,14 @@ function TagList() {
       data={data}
       onCreate={onCreate}
       onDelete={onDelete}
-      module={<TagCreateModel create={onCreate}></TagCreateModel>}
+      onSelect={changeRows}
+      module={
+        <TagCreateModel
+          create={onCreate}
+          delete={onDelete}
+          seletctRows={selectRows}
+        ></TagCreateModel>
+      }
     ></BaseList>
   );
 }

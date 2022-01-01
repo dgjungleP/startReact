@@ -4,7 +4,7 @@ import { PlusOutlined, ClearOutlined } from "@ant-design/icons";
 import "./model.css";
 const { Search, TextArea } = Input;
 const { Option } = Select;
-function CategoryCreateModel() {
+function CategoryCreateModel(props) {
   const [name, changeName] = useState("");
   const [description, changeDescription] = useState("");
   const innerModel = (
@@ -18,19 +18,17 @@ function CategoryCreateModel() {
     </div>
   );
   const category = { name, description };
-  const insert = (category) => {
-    console.log(category);
-  };
+  const createCategory = props.create;
   return (
     <BaseCreateModel
       title="分类"
       innerModel={innerModel}
       data={category}
-      onInsert={insert}
+      onInsert={createCategory}
     ></BaseCreateModel>
   );
 }
-function BlogCreateModel() {
+function BlogCreateModel(props) {
   const [name, changeName] = useState("");
   const [description, changeDescription] = useState("");
   const children = [];
@@ -113,16 +111,14 @@ function BlogCreateModel() {
       </Row>
     </div>
   );
-  const insert = (blog) => {
-    console.log(blog);
-  };
+  const createBlog = props.create;
   const blog = { name, description };
   return (
     <BaseCreateModel
       title="博客"
       innerModel={innerModel}
       data={blog}
-      onInsert={insert}
+      onInsert={createBlog}
       bigModel
     ></BaseCreateModel>
   );
@@ -130,6 +126,8 @@ function BlogCreateModel() {
 function TagCreateModel(props) {
   const [name, changeName] = useState("");
   const createTag = props.create;
+  const deleteTag = props.delete;
+  const slectRows = props.seletctRows;
   const innerModel = (
     <div>
       <BaseInput title="标签名" value={name} onChange={changeName}></BaseInput>
@@ -143,6 +141,8 @@ function TagCreateModel(props) {
       innerModel={innerModel}
       data={tag}
       onInsert={createTag}
+      onDelete={deleteTag}
+      seletctRows={slectRows}
     ></BaseCreateModel>
   );
 }
@@ -178,7 +178,9 @@ function BaseCreateModel(props) {
     console.log("Clicked cancel button");
     setVisible(false);
   };
-  const onDelete = () => {};
+  const onDelete = (data) => {
+    props.onDelete(data);
+  };
   return (
     <Row align="start" gutter={[15, 50]}>
       <Col>
@@ -205,7 +207,11 @@ function BaseCreateModel(props) {
         </Modal>
       </Col>
       <Col>
-        <Button type="primary" danger onClick={() => onDelete()}>
+        <Button
+          type="primary"
+          danger
+          onClick={() => onDelete(props.seletctRows)}
+        >
           <ClearOutlined />
           删除{props.title}
         </Button>

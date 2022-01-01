@@ -159,29 +159,30 @@ const LinkeData = [
     smooth: true,
   },
 ];
+const TitleMap = [
+  { id: 1, title: "浏览量", value: 200, icon: "eye" },
+  {
+    id: 2,
+    title: "博客数量",
+    value: 200,
+    icon: "My-Book",
+  },
+  { id: 3, title: "在线用户", value: 200, icon: "user" },
+  { id: 4, title: "请求量", value: 200, icon: "nonetwork" },
+];
 function DashBord() {
   const [title, setTile] = useState([]);
   const currentDate = new Date();
-
   const freshHeader = () => {
     getHeader().then((response) => {
       const baseHeader = response.data.data;
-      const TitleMap = [
-        { id: 1, title: "浏览量", value: 200, icon: "eye" },
-        {
-          id: 2,
-          title: "博客数量",
-          value: baseHeader.TagCount,
-          icon: "My-Book",
-        },
-        { id: 3, title: "在线用户", value: 200, icon: "user" },
-        { id: 4, title: "请求量", value: 200, icon: "nonetwork" },
-      ];
       setTile(TitleMap);
     });
   };
+  const freshCount = () => {};
   useEffect(() => {
     freshHeader();
+    freshCount();
   }, []);
   return (
     <>

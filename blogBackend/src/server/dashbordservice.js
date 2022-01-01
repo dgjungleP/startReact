@@ -1,9 +1,7 @@
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:8090";
-axios.defaults.headers = {};
-
+const preFix = "/dashboard";
 function getHeader() {
-  return axios.get("/dashboard/header");
+  return axios.get(preFix + "/header");
 }
 
 export { getHeader };
