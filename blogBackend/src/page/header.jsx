@@ -105,7 +105,9 @@ function HeaderMenus(props) {
             onClick={() => props.changeSelectedTag(tag)}
             onClose={() => {
               props.closeTag(tag);
-              navigate("/index");
+              if (props.selectedTag == tag) {
+                navigate("/index");
+              }
             }}
           >
             <Link to={tag.abselutePath}>
