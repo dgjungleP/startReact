@@ -1,6 +1,6 @@
 import { Button, Card, Col, Input, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import "./assest/js/confetti.js";
+// import "./assest/js/confetti.js";
 function Login(props) {
   const myCanvas = React.createRef();
 
