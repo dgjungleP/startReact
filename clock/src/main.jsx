@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { InboxOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
-import axios from "axios";
+import { getFileList } from "./service/file_service";
 const { Dragger } = Upload;
 function PictureWall() {
   const [fileList, setFileList] = useState([]);
   const flushFileList = () => {
-    axios.get("http://localhost:8080/file/list/image").then((response) => {
+    getFileList().then((response) => {
       setFileList(response.data);
     });
   };
@@ -20,7 +20,7 @@ function PictureWall() {
       <Row gutter={[16, 24]} style={{ marginTop: 15, marginBottom: 15 }}>
         {fileList.map((file) => {
           return (
-            <Col span={4} key={file.id} style={{}}>
+            <Col span={4} key={file.id}>
               <FileCard file={file}></FileCard>
             </Col>
           );
@@ -53,29 +53,25 @@ function UploadFile(props) {
   };
   return (
     <>
-      <Row justify={"center"}>
-        <Col>
-          <Dragger
-            multiple={true}
-            name="file"
-            onChange={handleDragChange}
-            onDrop={handleDrop}
-            onPreview={handlePreview}
-            action="http://127.0.0.1:8080/file/upload"
-          >
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">
-              Click or drag file to this area to upload
-            </p>
-            <p className="ant-upload-hint">
-              Support for a single or bulk upload. Strictly prohibit from
-              uploading company data or other band files
-            </p>
-          </Dragger>
-        </Col>
-      </Row>
+      <Dragger
+        multiple={true}
+        name="file"
+        onChange={handleDragChange}
+        onDrop={handleDrop}
+        onPreview={handlePreview}
+        action="http://127.0.0.1:8080/file/upload"
+      >
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">
+          Click or drag file to this area to upload
+        </p>
+        <p className="ant-upload-hint">
+          Support for a single or bulk upload. Strictly prohibit from uploading
+          company data or other band files
+        </p>
+      </Dragger>
     </>
   );
 }
