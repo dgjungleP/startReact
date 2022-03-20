@@ -1,41 +1,47 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
-import { getWeiboDoc } from "./service/dashboard.js";
-import { List } from "antd";
-
-function WeiboDocList(props) {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    getWeiboDoc().then((response) => {
-      console.log(response.data);
-      setData(response.data);
-    });
-  }, []);
+import { WeiboDocList } from "./compment/dashboard/dashboard";
+import { Layout, Menu } from "antd";
+import { ContainerOutlined } from "@ant-design/icons";
+import "./main.css";
+const { Sider, Header, Content, Footer } = Layout;
+const { SubMenu } = Menu;
+function MyMenu(props) {
   return (
-    <>
-      <List
-        itemLayout="vertical"
-        size="large"
-        dataSource={data}
-        pagination={{ pageSize: 10 }}
-        renderItem={(item) => (
-          <List.Item key={item.md5} actions={[...item.links]}>
-            <List.Item.Meta
-              title={item.title}
-              description={item.type}
-            ></List.Item.Meta>
-            {item.content}
-          </List.Item>
-        )}
-      ></List>
-    </>
+    <Menu>
+      <Menu.Item key="1" icon={<ContainerOutlined />}>
+        Weibo Doc
+      </Menu.Item>
+    </Menu>
+  );
+}
+
+function BaseLayout(props) {
+  return (
+    <Layout className="site-layout">
+      <Sider className="site-layout-background">
+        <MyMenu></MyMenu>
+      </Sider>
+      <Layout className="site-layout">
+        <Header className="site-layout-background"></Header>
+        <Content style={{ margin: "16px 16px" }}>
+          <div
+            className="site-layout-background"
+            style={{ padding: 24, minHeight: 360 }}
+          >
+            <WeiboDocList></WeiboDocList>
+          </div>
+        </Content>
+        <Footer></Footer>
+      </Layout>
+    </Layout>
   );
 }
 
 ReactDOM.render(
   <React.StrictMode>
-    <WeiboDocList></WeiboDocList>
+    <BaseLayout></BaseLayout>
   </React.StrictMode>,
   document.getElementById("root")
 );
