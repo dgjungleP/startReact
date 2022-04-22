@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "antd/dist/antd.css";
 import { Card, Col, List, Row, Statistic } from "antd";
+import { getManagerInfo } from "./service/manager";
 function App(props) {
   useEffect(() => {
     var timerID = setInterval(() => {
-      console.log(200);
+      getManagerInfo().then((res) => {
+        console.log(res);
+      });
     }, 1000);
     return () => {
       clearInterval(timerID);
