@@ -31,7 +31,9 @@ function WeiboDocList(props) {
           <List.Item
             key={item.md5}
             actions={item.links.map((link) => (
-              <a href={link}>{link}</a>
+              <a href={link} target="_blank">
+                {link}
+              </a>
             ))}
           >
             <List.Item.Meta
