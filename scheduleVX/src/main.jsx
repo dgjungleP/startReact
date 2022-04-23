@@ -57,7 +57,7 @@ function ScheduleList(props) {
               <List.Item.Meta title={item.type} />
             </List.Item>
           )}
-        ></List>{" "}
+        ></List>
       </PageHeader>
     </>
   );
