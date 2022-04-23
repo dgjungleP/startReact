@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "antd/dist/antd.css";
-import { Card, Col, List, PageHeader, Row, Statistic } from "antd";
-import { getManagerInfo } from "./service/manager";
+import { Button, Card, Col, List, PageHeader, Row, Statistic } from "antd";
+import { getManagerInfo, startSchedule, stopSchedule } from "./service/manager";
 function App(props) {
   const [managerInfo, setManagerInfo] = useState({});
 
@@ -11,7 +11,6 @@ function App(props) {
       getManagerInfo()
         .then((res) => {
           setManagerInfo(res.data);
-          console.log(res);
         })
         .catch((res) => {
           clearInterval(timerID);
@@ -33,10 +32,12 @@ function App(props) {
           <ScheduleList
             title="定时任务"
             data={managerInfo.periodicScheduleList}
+            type="PERIODIC"
           />
           <ScheduleList
             title="单次执行任务"
             data={managerInfo.timerScheduleList}
+            type="TIMER"
           />
         </Card>
       </div>
@@ -46,15 +47,43 @@ function App(props) {
 
 function ScheduleList(props) {
   const data = props.data;
+  const type = props.type;
+  const stop = (id) => {
+    stopSchedule(id).then((res) => {
+      console.log(res);
+    });
+  };
+  const start = (id) => {
+    startSchedule(id).then((res) => {
+      console.log(res);
+    });
+  };
+  const requestNew = () => {
+    console.log(type);
+  };
   return (
     <>
-      <PageHeader className="site-page-header" title={props.title}>
+      <PageHeader
+        className="site-page-header"
+        title={props.title}
+        extra={[<Button onClick={requestNew}>新增</Button>]}
+      >
         <List
           itemLayout="horizontal"
           dataSource={data}
           renderItem={(item) => (
-            <List.Item>
-              <List.Item.Meta title={item.type} />
+            <List.Item
+              actions={[
+                <Button onClick={() => start(item.id)}>Start</Button>,
+                <Button onClick={() => stop(item.id)} danger>
+                  Stop
+                </Button>,
+              ]}
+            >
+              <List.Item.Meta
+                title={item.name}
+                description={item.description}
+              />
             </List.Item>
           )}
         ></List>
