@@ -1,7 +1,19 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import "antd/dist/antd.css";
-import { Button, Card, Col, List, PageHeader, Row, Statistic } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  List,
+  message,
+  Modal,
+  PageHeader,
+  Row,
+  Statistic,
+  Tag,
+} from "antd";
+import { SyncOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { getManagerInfo, startSchedule, stopSchedule } from "./service/manager";
 function App(props) {
   const [managerInfo, setManagerInfo] = useState({});
@@ -48,25 +60,63 @@ function App(props) {
 function ScheduleList(props) {
   const data = props.data;
   const type = props.type;
+
+  const [modalVisable, setModalvisable] = useState(false);
   const stop = (id) => {
     stopSchedule(id).then((res) => {
-      console.log(res);
+      message.info(res.data);
     });
   };
   const start = (id) => {
     startSchedule(id).then((res) => {
-      console.log(res);
+      message.info(res.data);
     });
   };
   const requestNew = () => {
     console.log(type);
+    setModalvisable(true);
   };
+  const modalHanleOk = () => {
+    setModalvisable(false);
+  };
+  const modalHanleCancel = () => {
+    setModalvisable(false);
+  };
+  const getTitle = (item) => {
+    return (
+      <>
+        <span style={{ marginRight: 15 }}>{item.name}</span>
+        <Tag icon={getIcon(item.status)} color={getColor(item.status)}>
+          {item.status}
+        </Tag>
+      </>
+    );
+  };
+  const getIcon = (status) => {
+    if (status == "RUNNING") {
+      return <SyncOutlined spin />;
+    } else if (status == "STOP") {
+      return <ClockCircleOutlined />;
+    }
+  };
+  const getColor = (status) => {
+    if (status == "RUNNING") {
+      return "processing";
+    } else if (status == "STOP") {
+      return "default";
+    }
+  };
+
   return (
     <>
       <PageHeader
         className="site-page-header"
         title={props.title}
-        extra={[<Button onClick={requestNew}>新增</Button>]}
+        extra={[
+          <Button onClick={requestNew} key="new">
+            新增
+          </Button>,
+        ]}
       >
         <List
           itemLayout="horizontal"
@@ -81,13 +131,19 @@ function ScheduleList(props) {
               ]}
             >
               <List.Item.Meta
-                title={item.name}
+                title={getTitle(item)}
                 description={item.description}
               />
             </List.Item>
           )}
         ></List>
       </PageHeader>
+      <Modal
+        visible={modalVisable}
+        title={"新建" + type + "任务"}
+        onOk={modalHanleOk}
+        onCancel={modalHanleCancel}
+      ></Modal>
     </>
   );
 }
